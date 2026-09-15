@@ -1,0 +1,868 @@
+.app {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  background: linear-gradient(135deg, #ffdde1 0%, #ffe6f0 40%, #fff0f5 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.music-toggle {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: #e63965;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(230, 57, 101, 0.4);
+  z-index: 20;
+  transition: transform 0.2s ease;
+}
+
+.music-toggle:hover {
+  transform: scale(1.08);
+}
+
+.scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 900px;
+  z-index: 1;
+}
+
+.frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 640px;
+  min-height: 620px;
+  padding: 8px;
+}
+
+.letter-card {
+  max-width: 480px;
+  width: 100%;
+}
+
+/* --- Corazones flotantes --- */
+.floating-hearts {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.floating-heart {
+  position: absolute;
+  bottom: -40px;
+  color: #ff6f91;
+  animation-name: floatUp;
+  animation-timing-function: ease-in;
+  animation-iteration-count: infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+/* --- Sobre --- */
+.envelope {
+  position: relative;
+  width: 280px;
+  height: 190px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  perspective: 1000px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.envelope:hover:not(.envelope--open) {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.envelope__back {
+  position: absolute;
+  inset: 0;
+  background: #f6a6c1;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(219, 39, 119, 0.25);
+}
+
+.envelope__front-left,
+.envelope__front-right {
+  position: absolute;
+  bottom: 0;
+  width: 50%;
+  height: 100%;
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.envelope__front-left {
+  left: 0;
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+.envelope__front-right {
+  right: 0;
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.envelope__letter-peek {
+  position: absolute;
+  left: 50%;
+  bottom: 8px;
+  transform: translateX(-50%);
+  width: 82%;
+  height: 78%;
+  background: #fffaf5;
+  border-radius: 6px;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.6s ease 0.15s;
+}
+
+.envelope__flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #ff8fab;
+  clip-path: polygon(0 0, 100% 0, 50% 62%);
+  border-radius: 10px 10px 0 0;
+  transform-origin: top center;
+  transition: transform 0.6s ease;
+  z-index: 3;
+}
+
+.envelope__heart-seal {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  background: #e63965;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  z-index: 4;
+  transition: opacity 0.3s ease;
+}
+
+.envelope__hint {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #c2185b;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+.envelope--open .envelope__flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope--open .envelope__letter-peek {
+  transform: translate(-50%, -60px);
+}
+
+.envelope--open .envelope__heart-seal {
+  opacity: 0;
+}
+
+.envelope--open {
+  cursor: default;
+}
+
+/* --- Carta --- */
+.letter-card {
+  background: #fffaf5;
+  border-radius: 16px;
+  padding: 32px 28px;
+  width: 100%;
+  box-shadow: 0 15px 40px rgba(219, 39, 119, 0.2);
+  animation: letterAppear 0.6s ease both;
+  text-align: left;
+}
+
+@keyframes letterAppear {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.letter-title {
+  font-family: 'Georgia', serif;
+  color: #c2185b;
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 2rem;
+}
+
+.letter-greeting {
+  font-weight: 600;
+  color: #ad1457;
+  margin-bottom: 4px;
+}
+
+.letter-paragraph,
+.letter-reasons-title,
+.letter-reason,
+.letter-signature {
+  opacity: 0;
+  animation: fadeSlideIn 0.6s ease forwards;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.letter-paragraph {
+  color: #5a3d3d;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.letter-reasons-title {
+  color: #c2185b;
+  margin: 20px 0 10px;
+}
+
+.letter-reasons {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+.letter-reason {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #5a3d3d;
+  margin-bottom: 8px;
+}
+
+.letter-reason__heart {
+  flex-shrink: 0;
+}
+
+.letter-signature {
+  text-align: right;
+  color: #ad1457;
+  font-style: italic;
+  margin-top: 24px;
+}
+
+.letter-signature__name {
+  font-weight: 700;
+  font-style: normal;
+}
+
+.love-button-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.love-button {
+  background: linear-gradient(135deg, #ff6f91, #e63965);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(230, 57, 101, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.love-button:hover {
+  transform: scale(1.06);
+}
+
+.love-button:active {
+  transform: scale(0.96);
+}
+
+.heart-burst {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.heart-burst__piece {
+  position: absolute;
+  color: #e63965;
+  font-size: 20px;
+  transform: rotate(var(--angle));
+  animation: burstOut 0.9s ease-out forwards;
+}
+
+@keyframes burstOut {
+  0% {
+    transform: rotate(var(--angle)) translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(var(--angle)) translateY(-90px);
+    opacity: 0;
+  }
+}
+
+/* --- Modal "Te amo" --- */
+.love-modal {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(20, 10, 15, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 15;
+  overflow: hidden;
+  animation: modalFadeIn 0.25s ease;
+}
+
+.love-modal__fireworks {
+  position: absolute;
+  inset: 0;
+}
+
+.firework {
+  position: absolute;
+  width: 0;
+  height: 0;
+  animation: var(--duration) linear infinite;
+}
+
+.firework__rocket {
+  position: absolute;
+  top: 0;
+  left: -1.5px;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: rocketRise var(--duration) linear infinite;
+}
+
+.firework__flash {
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: flashPop var(--duration) linear infinite;
+}
+
+.firework__particle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  opacity: 0;
+  animation: particleBurst var(--duration) cubic-bezier(0.15, 0.6, 0.35, 1) infinite;
+}
+
+@keyframes rocketRise {
+  0% {
+    transform: translateY(150px);
+    opacity: 0;
+  }
+  4% {
+    opacity: 1;
+  }
+  20% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  23% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes flashPop {
+  0%, 19% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  21% {
+    transform: scale(1.6);
+    opacity: 1;
+  }
+  32% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes particleBurst {
+  0%, 20% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0;
+  }
+  22% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  65% {
+    transform: translate(var(--dx), var(--dy)) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), calc(var(--dy) + 55px)) scale(0.3);
+    opacity: 0;
+  }
+}
+
+.love-modal__content {
+  position: relative;
+  background: #fffaf5;
+  border-radius: 16px;
+  padding: 36px 28px;
+  max-width: min(90vw, 440px);
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  animation: modalPopIn 0.35s ease;
+  z-index: 1;
+}
+
+.love-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.love-modal__text {
+  color: #ad1457;
+  font-family: 'Georgia', serif;
+  font-size: 1.15rem;
+  line-height: 1.7;
+  margin: 8px 0 4px;
+}
+
+.love-modal__hearts {
+  font-size: 28px;
+  margin-top: 12px;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+
+@media (max-width: 420px) {
+  .letter-card {
+    padding: 24px 18px;
+  }
+
+  .letter-title {
+    font-size: 1.6rem;
+  }
+}
+
+/* --- Galería de fotos estilo polaroid, una en cada esquina de la carta --- */
+.polaroid-gallery {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.polaroid-gallery .polaroid {
+  position: absolute;
+  pointer-events: auto;
+}
+
+.corner-top-left {
+  top: -80px;
+  left: -140px;
+}
+
+.corner-top-right {
+  top: -80px;
+  right: -140px;
+}
+
+.corner-bottom-left {
+  bottom: -80px;
+  left: -140px;
+}
+
+.corner-bottom-right {
+  bottom: -80px;
+  right: -140px;
+}
+
+.corner-bottom-center {
+  bottom: -250px;
+  left: 50%;
+  transform: translateX(-50%) rotate(var(--rotate));
+}
+
+.polaroid {
+  --rotate: 0deg;
+  position: relative;
+  background: #fdfdfb;
+  padding: 14px 14px 34px;
+  width: 190px;
+  border-radius: 3px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25), 0 2px 4px rgba(0, 0, 0, 0.15);
+  transform: rotate(var(--rotate));
+  opacity: 0;
+  animation: polaroidDrop 0.7s ease forwards;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.polaroid:hover {
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.3), 0 4px 6px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+}
+
+.polaroid--clickable {
+  cursor: pointer;
+}
+
+/* --- Modal de foto en grande --- */
+.photo-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 10, 15, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 10;
+  pointer-events: auto;
+  animation: modalFadeIn 0.25s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.photo-modal__content {
+  position: relative;
+  background: #fffaf5;
+  border-radius: 16px;
+  padding: 20px;
+  max-width: min(90vw, 480px);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  animation: modalPopIn 0.3s ease;
+}
+
+@keyframes modalPopIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.photo-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  z-index: 1;
+}
+
+.photo-modal__media {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  filter: sepia(0.15) contrast(1.02);
+}
+
+.photo-modal__media img,
+.photo-modal__media video {
+  width: 100%;
+  max-height: 65vh;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+
+.photo-modal__card {
+  perspective: 1200px;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.photo-modal__card-inner {
+  display: grid;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease;
+}
+
+.photo-modal__card-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.photo-modal__face {
+  grid-area: 1 / 1;
+  backface-visibility: hidden;
+}
+
+.photo-modal__face--front {
+  position: relative;
+}
+
+.photo-modal__face--back {
+  transform: rotateY(180deg);
+  background: #fffaf5;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  min-height: 260px;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.photo-modal__hint {
+  margin: 10px 4px 0;
+  text-align: center;
+  color: #b7857e;
+  font-size: 13px;
+}
+
+.photo-modal__text {
+  margin: 16px 4px 4px;
+  color: #5a3d3d;
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+@keyframes polaroidDrop {
+  from {
+    opacity: 0;
+    transform: rotate(var(--rotate)) translateY(-24px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(var(--rotate)) translateY(0) scale(1);
+  }
+}
+
+.polaroid__tape {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+  width: 60px;
+  height: 24px;
+  background: rgba(255, 244, 214, 0.75);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.polaroid__photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #d8d4cb;
+  overflow: hidden;
+  filter: sepia(0.15) contrast(1.02);
+}
+
+.polaroid__photo img,
+.polaroid__photo video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroid__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: #8a8378;
+  font-size: 13px;
+  border: 2px dashed #b7b0a1;
+}
+
+.polaroid__placeholder span {
+  font-size: 28px;
+}
+
+.polaroid__caption {
+  margin: 10px 0 0;
+  text-align: center;
+  font-family: 'Segoe Script', 'Brush Script MT', cursive;
+  color: #4a4038;
+  font-size: 15px;
+}
+
+@media (max-width: 900px) {
+  .frame {
+    min-height: 560px;
+    max-width: 460px;
+  }
+
+  .polaroid-gallery .polaroid {
+    width: 130px;
+    padding: 10px 10px 24px;
+  }
+
+  .corner-top-left {
+    top: -50px;
+    left: -60px;
+  }
+
+  .corner-top-right {
+    top: -50px;
+    right: -60px;
+  }
+
+  .corner-bottom-left {
+    bottom: -50px;
+    left: -60px;
+  }
+
+  .corner-bottom-right {
+    bottom: -50px;
+    right: -60px;
+  }
+
+  .corner-bottom-center {
+    bottom: -220px;
+  }
+}
+
+@media (max-width: 600px) {
+  .frame {
+    min-height: 460px;
+    max-width: 340px;
+  }
+
+  .polaroid-gallery .polaroid {
+    width: 100px;
+    padding: 8px 8px 20px;
+  }
+
+  .polaroid__caption {
+    font-size: 12px;
+  }
+
+  .corner-top-left,
+  .corner-top-right {
+    top: -35px;
+  }
+
+  .corner-bottom-left,
+  .corner-bottom-right {
+    bottom: -35px;
+  }
+
+  .corner-top-left,
+  .corner-bottom-left {
+    left: -40px;
+  }
+
+  .corner-top-right,
+  .corner-bottom-right {
+    right: -40px;
+  }
+
+  .corner-bottom-center {
+    bottom: -210px;
+  }
+}
