@@ -993,19 +993,131 @@
   position: relative;
   z-index: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 28px;
   width: 100%;
   height: 100%;
   padding: 24px;
 }
 
+.yellow-page__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120vmax;
+  height: 120vmax;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.55), rgba(255, 218, 100, 0) 60%);
+  animation: glowPulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+.yellow-page__intro {
+  color: #6b4400;
+  font-family: 'Georgia', serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  text-align: center;
+  opacity: 0;
+  animation: introFade 3.2s ease forwards;
+}
+
+@keyframes introFade {
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Pétalos cayendo suavemente */
+.falling-petals {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.falling-petal {
+  position: absolute;
+  top: -40px;
+  animation-name: petalFall;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes petalFall {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  50% {
+    transform: translate(var(--sway), 55vh) rotate(180deg);
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(var(--sway) * -1), 115vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
 /* Caja de regalo que se acerca */
 .gift-box {
   position: relative;
+  z-index: 0;
   width: 160px;
   height: 140px;
   animation: boxApproach 3.2s ease forwards;
+}
+
+.gift-box__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 220%;
+  height: 220%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(255, 214, 10, 0.55), transparent 70%);
+  border-radius: 50%;
+  animation: boxHeartbeat 1.4s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes boxHeartbeat {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.85);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.9;
+  }
 }
 
 @keyframes boxApproach {
@@ -1236,15 +1348,38 @@
 }
 
 .yellow-page__phrase {
+  position: relative;
   color: #6b4400;
   font-family: 'Georgia', serif;
   font-size: 1.2rem;
+  font-style: italic;
   line-height: 1.7;
-  background: rgba(255, 255, 255, 0.55);
-  padding: 20px 24px;
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 183, 3, 0.4);
+  padding: 24px 32px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(150, 100, 0, 0.15);
   opacity: 0;
   animation: fadeSlideIn 0.7s ease 0.5s forwards;
+}
+
+.yellow-page__quote {
+  color: #ffb703;
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 0;
+  vertical-align: middle;
+}
+
+.yellow-page__signature {
+  color: #a86b00;
+  font-family: 'Georgia', serif;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-align: center;
+  opacity: 0;
+  animation: fadeSlideIn 0.7s ease 1.3s forwards;
 }
 
 @media (max-width: 420px) {
@@ -1260,7 +1395,12 @@
 
   .yellow-page__phrase {
     font-size: 1.05rem;
-    padding: 16px 18px;
+    padding: 18px 20px;
+  }
+
+  .yellow-page__intro {
+    font-size: 1rem;
+    padding: 0 12px;
   }
 }
 

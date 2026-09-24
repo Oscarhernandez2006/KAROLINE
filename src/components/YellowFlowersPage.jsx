@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import FloatingHearts from './FloatingHearts'
+import FallingPetals from './FallingPetals'
 import Fireworks from './Fireworks'
 import Sunflower from './Sunflower'
 import Leaf from './Leaf'
@@ -40,11 +41,19 @@ function YellowFlowersPage({ onBack }) {
       </button>
 
       <FloatingHearts count={16} symbols={['🌻', '🌼', '✨']} />
+      <FallingPetals count={14} />
       <Fireworks count={6} palettes={YELLOW_PALETTES} />
+
+      <div className="yellow-page__glow" aria-hidden="true" />
 
       <div className="yellow-page__stage">
         {!opened && (
+          <p className="yellow-page__intro">Espera un momento, mi cielo… algo especial se acerca 💛</p>
+        )}
+
+        {!opened && (
           <div className="gift-box" onAnimationEnd={() => setOpened(true)}>
+            <div className="gift-box__glow" />
             <div className="gift-box__base" />
             <div className="gift-box__ribbon-v" />
             <div className="gift-box__ribbon-h" />
@@ -88,9 +97,12 @@ function YellowFlowersPage({ onBack }) {
               ))}
             </div>
             <p className="yellow-page__phrase">
+              <span className="yellow-page__quote">“</span>
               ¿Pensaste que ibas a hacer de espectadora, mi cielo? No te las regalé en estos días
               porque recuerda que yo voy fuera de lo común... pero lo tenía en mi mente 24/7.
+              <span className="yellow-page__quote">”</span>
             </p>
+            <p className="yellow-page__signature">Con todo mi cariño, hoy y siempre. 💛</p>
           </div>
         )}
       </div>
