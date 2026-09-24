@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import FloatingHearts from './FloatingHearts'
 import Fireworks from './Fireworks'
+import Sunflower from './Sunflower'
+import Leaf from './Leaf'
 
 const YELLOW_PALETTES = [
   ['#ffd60a', '#fff3b0'],
@@ -55,10 +57,13 @@ function YellowFlowersPage({ onBack }) {
           <div className="sunflower-reveal">
             <div className="sunflower-bouquet" aria-hidden="true">
               <div className="bouquet-wrap" />
+              <div className="bouquet-wrap__fold" />
               <div className="bouquet-ribbon" />
+              <div className="bouquet-ribbon__knot" />
               {LEAVES.map((leaf, i) => (
-                <span
+                <Leaf
                   key={`leaf-${i}`}
+                  size={54}
                   className="bouquet-leaf"
                   style={{
                     left: `calc(50% + ${leaf.dx}px)`,
@@ -66,24 +71,20 @@ function YellowFlowersPage({ onBack }) {
                     '--rot': `${leaf.rot}deg`,
                     animationDelay: `${0.15 + i * 0.08}s`,
                   }}
-                >
-                  🌿
-                </span>
+                />
               ))}
               {SUNFLOWERS.map((flower, i) => (
-                <span
+                <Sunflower
                   key={`flower-${i}`}
+                  size={flower.size}
                   className="bouquet-flower"
                   style={{
                     left: `calc(50% + ${flower.dx}px)`,
                     bottom: `${flower.bottom}px`,
-                    fontSize: `${flower.size}px`,
                     '--rot': `${flower.rot}deg`,
                     animationDelay: `${0.3 + i * 0.1}s`,
                   }}
-                >
-                  🌻
-                </span>
+                />
               ))}
             </div>
             <p className="yellow-page__phrase">
