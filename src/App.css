@@ -1090,18 +1090,48 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  height: 140px;
-  width: 260px;
+  height: 260px;
+  width: 320px;
 }
 
-.sunflower-bouquet span {
+.bouquet-wrap {
   position: absolute;
-  left: calc(50% + (var(--i) - 2) * 42px);
-  bottom: 0;
-  font-size: 60px;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 130px;
+  background: linear-gradient(160deg, #e8c27a 0%, #d9a441 60%, #c88a2b 100%);
+  clip-path: polygon(38% 100%, 62% 100%, 100% 15%, 0% 15%);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.bouquet-ribbon {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-4deg);
+  width: 80px;
+  height: 22px;
+  background: linear-gradient(135deg, #d62839, #ff4d5e);
+  border-radius: 3px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+}
+
+.bouquet-leaf {
+  position: absolute;
+  font-size: 46px;
   transform-origin: bottom center;
+  opacity: 0;
   animation: bouquetPop 0.7s ease both;
-  animation-delay: calc(var(--i) * 0.12s);
+}
+
+.bouquet-flower {
+  position: absolute;
+  transform-origin: bottom center;
+  opacity: 0;
+  filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.25));
+  animation: bouquetPop 0.7s ease both;
 }
 
 @keyframes bouquetPop {
@@ -1111,7 +1141,7 @@
   }
   100% {
     opacity: 1;
-    transform: translate(-50%, 0) scale(1) rotate(calc((var(--i) - 2) * 14deg));
+    transform: translate(-50%, 0) scale(1) rotate(var(--rot));
   }
 }
 
@@ -1133,9 +1163,9 @@
     height: 115px;
   }
 
-  .sunflower-bouquet span {
-    font-size: 46px;
-    left: calc(50% + (var(--i) - 2) * 32px);
+  .sunflower-bouquet {
+    transform: scale(0.68);
+    height: 200px;
   }
 
   .yellow-page__phrase {
