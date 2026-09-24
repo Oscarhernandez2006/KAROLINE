@@ -384,7 +384,7 @@
   animation: modalFadeIn 0.25s ease;
 }
 
-.love-modal__fireworks {
+.fireworks-layer {
   position: absolute;
   inset: 0;
 }
@@ -937,3 +937,210 @@
     padding: 28px 20px;
   }
 }
+
+/* --- Botón "Tus flores amarillas" --- */
+.yellow-flowers-button {
+  margin-top: 8px;
+  background: linear-gradient(135deg, #ffb703, #ffd60a);
+  color: #6b4400;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(255, 183, 3, 0.45);
+  transition: transform 0.2s ease;
+}
+
+.yellow-flowers-button:hover {
+  transform: scale(1.05);
+}
+
+.yellow-flowers-button:active {
+  transform: scale(0.96);
+}
+
+/* --- Página "Tus flores amarillas" --- */
+.yellow-page {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(160deg, #fffbe6 0%, #ffe985 45%, #ffb703 100%);
+  z-index: 30;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.yellow-page__back {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 32;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.yellow-page__stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+}
+
+/* Caja de regalo que se acerca */
+.gift-box {
+  position: relative;
+  width: 160px;
+  height: 140px;
+  animation: boxApproach 3.2s ease forwards;
+}
+
+@keyframes boxApproach {
+  0% {
+    transform: scale(0.1) translateY(60px);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.08) translateY(0);
+    opacity: 1;
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.gift-box__base {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 68%;
+  background: linear-gradient(135deg, #f4a300, #ffb703);
+  border-radius: 8px;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+}
+
+.gift-box__lid {
+  position: absolute;
+  top: 24%;
+  left: -5%;
+  width: 110%;
+  height: 28px;
+  background: linear-gradient(135deg, #e08e00, #ffc233);
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.gift-box__ribbon-v {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 18px;
+  transform: translateX(-50%);
+  background: #d62839;
+}
+
+.gift-box__ribbon-h {
+  position: absolute;
+  top: 24%;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: #d62839;
+}
+
+.gift-box__bow {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 38px;
+}
+
+/* Ramo de girasoles y frase revelada */
+.sunflower-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  max-width: 560px;
+  text-align: center;
+  animation: modalFadeIn 0.5s ease;
+}
+
+.sunflower-bouquet {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 140px;
+  width: 260px;
+}
+
+.sunflower-bouquet span {
+  position: absolute;
+  left: calc(50% + (var(--i) - 2) * 42px);
+  bottom: 0;
+  font-size: 60px;
+  transform-origin: bottom center;
+  animation: bouquetPop 0.7s ease both;
+  animation-delay: calc(var(--i) * 0.12s);
+}
+
+@keyframes bouquetPop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 50px) scale(0.3) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1) rotate(calc((var(--i) - 2) * 14deg));
+  }
+}
+
+.yellow-page__phrase {
+  color: #6b4400;
+  font-family: 'Georgia', serif;
+  font-size: 1.2rem;
+  line-height: 1.7;
+  background: rgba(255, 255, 255, 0.55);
+  padding: 20px 24px;
+  border-radius: 16px;
+  opacity: 0;
+  animation: fadeSlideIn 0.7s ease 0.5s forwards;
+}
+
+@media (max-width: 420px) {
+  .gift-box {
+    width: 130px;
+    height: 115px;
+  }
+
+  .sunflower-bouquet span {
+    font-size: 46px;
+    left: calc(50% + (var(--i) - 2) * 32px);
+  }
+
+  .yellow-page__phrase {
+    font-size: 1.05rem;
+    padding: 16px 18px;
+  }
+}
+

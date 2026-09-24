@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
-// Genera corazones flotantes con posiciones y animaciones aleatorias.
-function FloatingHearts({ count = 18 }) {
+// Genera elementos flotantes (corazones por defecto) con posiciones y animaciones aleatorias.
+function FloatingHearts({ count = 18, symbols = ['❤', '💗'] }) {
   const hearts = useMemo(() => {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
@@ -9,10 +9,10 @@ function FloatingHearts({ count = 18 }) {
       size: 14 + Math.random() * 22,
       duration: 8 + Math.random() * 10,
       delay: Math.random() * 10,
-      symbol: Math.random() > 0.5 ? '❤' : '💗',
+      symbol: symbols[Math.floor(Math.random() * symbols.length)],
       opacity: 0.4 + Math.random() * 0.5,
     }))
-  }, [count])
+  }, [count, symbols])
 
   return (
     <div className="floating-hearts" aria-hidden="true">
